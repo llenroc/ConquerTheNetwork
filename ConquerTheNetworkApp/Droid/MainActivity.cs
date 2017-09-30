@@ -3,6 +3,8 @@ using Android.Content.PM;
 using Android.OS;
 using Acr.UserDialogs;
 using Xamarin.Forms;
+using ConquerTheNetworkApp.Services;
+using ConquerTheNetworkApp.Droid.Services;
 
 namespace ConquerTheNetworkApp.Droid
 {
@@ -20,6 +22,7 @@ namespace ConquerTheNetworkApp.Droid
 			Forms.Init(this, bundle);
 
 			UserDialogs.Init(this);
+			ServiceClient.Init(new DroidMessageHandlerFactory());
 
 			LoadApplication(new App());
 		}
