@@ -1,5 +1,7 @@
 ﻿using Xamarin.Forms;
 using ConquerTheNetworkApp.Views;
+using Plugin.Connectivity;
+using Acr.UserDialogs;
 
 [assembly: Xamarin.Forms.Xaml.XamlCompilation(Xamarin.Forms.Xaml.XamlCompilationOptions.Compile)]
 
@@ -11,7 +13,21 @@ namespace ConquerTheNetworkApp
 		{
 			InitializeComponent();
 
+			CrossConnectivity.Current.ConnectivityChanged += (sender, e) =>
+			{
+				string status = e.IsConnected ? "online" : "offline";
+				Notify($"Your connection has changed. You are {status}.");
+			};
+
 			MainPage = new NavigationPage(new CitiesView());
+		}
+
+		protected void Notify(string message)
+		{
+			var config = new ToastConfig(message)
+				.SetDuration(2000);
+			
+			UserDialogs.Instance.Toast(config);
 		}
 
 		protected override void OnStart()
